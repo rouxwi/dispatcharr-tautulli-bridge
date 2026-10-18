@@ -86,7 +86,7 @@ function device(ua = '') {
 }
 const res = h => (h >= 2160 ? '4k' : h >= 1080 ? '1080' : h >= 720 ? '720' : h >= 480 ? '480' : h ? 'sd' : '');
 const sessionKey = id => String(parseInt(crypto.createHash('md5').update(id).digest('hex').slice(0, 7), 16));
-const logoPath = (kind, id) => (id ? `/dispatcharr/${kind}/${id}` : '');
+const logoPath = (kind, id) => (kind === 'logo' ? `/dispatcharr/logo/${id || 0}` : id ? `/dispatcharr/${kind}/${id}` : '');
 
 // Guide titles carry markers like "ᴺᵉʷ" in superscript letters; drop them.
 const clean = t => String(t || '').replace(/[ᴬ-ᵪᶜ-ᶿʰ-˿⁰-₟]+/g, '').replace(/\s{2,}/g, ' ').trim();
@@ -190,6 +190,16 @@ async function terminate(q) {
 }
 
 const PIXEL = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=', 'base64');
+// Fallback when a channel has no usable logo (e.g. the provider's logo URL is dead): a dark poster tile with a
+// simple TV icon, drawn from shapes only so it needs no fonts in the container.
+const TV_SVG = (w, h) => {
+  const s = Math.min(w, h) * 0.45, x = (w - s) / 2, y = (h - s * 0.8) / 2;
+  return Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><rect width="100%" height="100%" fill="#1c1f26"/>
+  <g fill="none" stroke="#8a93a6" stroke-width="${s * 0.06}" stroke-linecap="round">
+    <rect x="${x}" y="${y + s * 0.18}" width="${s}" height="${s * 0.62}" rx="${s * 0.08}"/>
+    <line x1="${x + s * 0.35}" y1="${y}" x2="${x + s * 0.5}" y2="${y + s * 0.16}"/><line x1="${x + s * 0.65}" y1="${y}" x2="${x + s * 0.5}" y2="${y + s * 0.16}"/>
+    <line x1="${x + s * 0.3}" y1="${y + s * 0.92}" x2="${x + s * 0.7}" y2="${y + s * 0.92}"/></g></svg>`);
+};
 async function image(q, out) {
   const img = q.img || '';
   let url = null, m;
@@ -218,6 +228,11 @@ async function image(q, out) {
       out.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'max-age=3600' }); return out.end(body);
     }
   } catch {}
+  const w = Math.min(+q.width || 0, 1000), h = Math.min(+q.height || 0, 1500);
+  if (img.startsWith('/dispatcharr/logo/') && w > 0 && h > 0) try {
+    const tile = await sharp(TV_SVG(w, h)).png().toBuffer();
+    out.writeHead(200, { 'Content-Type': 'image/png', 'Cache-Control': 'max-age=600' }); return out.end(tile);
+  } catch (e) { log(`fallback tile failed: ${e.message}`); }
   out.writeHead(200, { 'Content-Type': 'image/png' }); out.end(PIXEL);
 }
 
