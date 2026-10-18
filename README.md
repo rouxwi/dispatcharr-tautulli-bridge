@@ -55,6 +55,9 @@ docker compose up -d --build
 ### docker run
 
 ```bash
+git clone https://github.com/rouxwi/dispatcharr-tautulli-bridge.git
+docker build -t dispatcharr-tautulli-bridge ./dispatcharr-tautulli-bridge
+
 docker run -d --name dispatcharr-tautulli-bridge --restart unless-stopped \
   -p 8182:8182 \
   -e DISPATCHARR_URL=http://192.168.1.10:9191 \
@@ -63,7 +66,7 @@ docker run -d --name dispatcharr-tautulli-bridge --restart unless-stopped \
   -e SERVER_NAME=Dispatcharr \
   -v /path/to/data:/data \
   --memory 256m --cpus 0.5 \
-  ghcr.io/rouxwi/dispatcharr-tautulli-bridge:latest
+  dispatcharr-tautulli-bridge
 ```
 
 ### Unraid
