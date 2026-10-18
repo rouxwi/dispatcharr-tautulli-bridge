@@ -49,15 +49,12 @@ openssl rand -hex 16
 git clone https://github.com/rouxwi/dispatcharr-tautulli-bridge.git
 cd dispatcharr-tautulli-bridge
 cp .env.example .env      # then edit .env
-docker compose up -d --build
+docker compose up -d
 ```
 
 ### docker run
 
 ```bash
-git clone https://github.com/rouxwi/dispatcharr-tautulli-bridge.git
-docker build -t dispatcharr-tautulli-bridge ./dispatcharr-tautulli-bridge
-
 docker run -d --name dispatcharr-tautulli-bridge --restart unless-stopped \
   -p 8182:8182 \
   -e DISPATCHARR_URL=http://192.168.1.10:9191 \
@@ -66,12 +63,12 @@ docker run -d --name dispatcharr-tautulli-bridge --restart unless-stopped \
   -e SERVER_NAME=Dispatcharr \
   -v /path/to/data:/data \
   --memory 256m --cpus 0.5 \
-  dispatcharr-tautulli-bridge
+  ghcr.io/rouxwi/dispatcharr-tautulli-bridge:latest
 ```
 
 ### Unraid
 
-Build the image once from a shell (`git clone` this repo, then `docker build -t dispatcharr-tautulli-bridge .`), then add a container (Docker tab → *Add Container*) with repository `dispatcharr-tautulli-bridge`,
+Add a container (Docker tab → *Add Container*) with repository `ghcr.io/rouxwi/dispatcharr-tautulli-bridge:latest`,
 port `8182`, path `/data` → `/mnt/user/appdata/dispatcharr-tautulli-bridge`, and the four variables below.
 
 ### Settings

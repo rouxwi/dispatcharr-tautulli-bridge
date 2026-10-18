@@ -1,7 +1,7 @@
 services:
   dispatcharr-tautulli-bridge:
-    build: .
-    # a prebuilt image (ghcr.io/rouxwi/dispatcharr-tautulli-bridge) is planned
+    image: ghcr.io/rouxwi/dispatcharr-tautulli-bridge:latest
+    # or build it yourself from this folder instead:  build: .
     container_name: dispatcharr-tautulli-bridge
     restart: unless-stopped
     env_file: .env
