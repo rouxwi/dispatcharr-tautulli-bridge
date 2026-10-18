@@ -1,0 +1,10 @@
+{
+  "name": "dispatcharr-tautulli-bridge",
+  "version": "1.0.0",
+  "description": "Shows Dispatcharr live TV and VOD streams in the Tautulli Remote app by emulating a Tautulli server",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "dependencies": { "sharp": "^0.34.5" }
+}

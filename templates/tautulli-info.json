@@ -1,0 +1,12 @@
+{
+  "tautulli_install_type": "docker",
+  "tautulli_version": "v2.18.2",
+  "tautulli_branch": "master",
+  "tautulli_commit": "0000000000000000000000000000000000000000",
+  "tautulli_platform": "Linux",
+  "tautulli_platform_release": "",
+  "tautulli_platform_version": "",
+  "tautulli_platform_linux_distro": "",
+  "tautulli_platform_device_name": "dispatcharr-tautulli-bridge",
+  "tautulli_python_version": ""
+}

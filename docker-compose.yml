@@ -1,0 +1,13 @@
+services:
+  dispatcharr-tautulli-bridge:
+    build: .
+    # a prebuilt image (ghcr.io/rouxwi/dispatcharr-tautulli-bridge) is planned
+    container_name: dispatcharr-tautulli-bridge
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8182:8182"
+    volumes:
+      - ./data:/data        # watch history + registered devices
+    mem_limit: 256m
+    cpus: 0.5

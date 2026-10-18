@@ -1,0 +1,32 @@
+{
+  "get_users_table": {
+    "recordsFiltered": 0,
+    "recordsTotal": 0,
+    "data": [],
+    "draw": 1
+  },
+  "get_history": {
+    "recordsFiltered": 0,
+    "recordsTotal": 0,
+    "data": [],
+    "draw": 1,
+    "filter_duration": "0",
+    "total_duration": "0"
+  },
+  "get_libraries_table": {
+    "recordsFiltered": 0,
+    "recordsTotal": 0,
+    "data": [],
+    "draw": 1
+  },
+  "get_recently_added": {
+    "recently_added": []
+  },
+  "get_home_stats": [],
+  "get_user_names": [],
+  "get_libraries": [],
+  "get_date_formats": {
+    "date_format": "YYYY-MM-DD",
+    "time_format": "HH:mm"
+  }
+}
